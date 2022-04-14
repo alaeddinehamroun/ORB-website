@@ -1,0 +1,32 @@
+nb-card {
+  flex-direction: row;
+  align-items: center;
+  height: 6rem;
+  overflow: visible;
+  &.off {
+    color: #fff;
+
+    .status,
+    .title {
+      color: #8f9bb3;
+    }
+
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    border-left: 1px solid transparent;
+    padding: 0.625rem;
+  }
+
+  .title {
+    margin: 0;
+  }
+
+  .status {
+    text-transform: uppercase;
+  }
+}

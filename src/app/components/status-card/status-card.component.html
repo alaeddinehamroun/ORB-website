@@ -1,0 +1,10 @@
+<nb-card [ngClass]="{'off': !toggleLight}">
+  <nb-card-body>
+    <nb-toggle status="success" (click)="lightChanged()" [(ngModel)]="toggleLight">
+      <div class="details">
+        <div class="title h5">Light</div>
+        <div class="status paragraph-2">{{ toggleLight ? 'ON' : 'OFF' }}</div>
+      </div>
+    </nb-toggle>
+  </nb-card-body>
+</nb-card>

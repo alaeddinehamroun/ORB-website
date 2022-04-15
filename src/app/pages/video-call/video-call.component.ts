@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { NbDialogService } from '@nebular/theme';
 
 interface Data { sdp: string; type: string }
 
@@ -28,7 +29,7 @@ export class VideoCallComponent implements OnInit {
   private localStream!: MediaStream;
   private remoteStream!: MediaStream;
   callId!: string;
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private dialogService: NbDialogService) { }
 
   ngOnInit(): void {
   }

@@ -24,6 +24,10 @@ import { ChatComponent } from './components/chat/chat.component';
 import { ChatShowcaseService } from './services/chat-showcase/chat-showcase.service';
 import { StatusCardComponent } from './components/status-card/status-card.component';
 import { ChartjsLineComponent } from './components/chartjs-line/chartjs-line.component';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartModule } from 'angular2-chartjs';
+import { ChartjsPieComponent } from './components/chartjs-pie/chartjs-pie.component';
+import { VideoMonitorComponent } from './components/video-monitor/video-monitor.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,9 @@ import { ChartjsLineComponent } from './components/chartjs-line/chartjs-line.com
     VideoCallComponent,
     ChatComponent,
     StatusCardComponent,
-    ChartjsLineComponent
+    ChartjsLineComponent,
+    ChartjsPieComponent,
+    VideoMonitorComponent
   ],
   imports: [
     FormsModule,
@@ -60,9 +66,12 @@ import { ChartjsLineComponent } from './components/chartjs-line/chartjs-line.com
     NbAccordionModule,
     NbTabsetModule,
     NbCalendarModule,
-    NbChatModule,
+    NbChatModule.forRoot({
+      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
+    }),
     NbToggleModule,
 
+    ChartModule,
     SharedModule,
   ],
   providers: [ChatShowcaseService],

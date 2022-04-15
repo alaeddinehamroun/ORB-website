@@ -1,19 +1,7 @@
 <app-navbar>
-  <div class="main-content">
-
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-xxxl-3 col-md-3">
-        <app-status-card></app-status-card>
-      </div>
-    </div>
-    <nb-card>
-      <div class="icon-container">
-
-      </div>
-
-    </nb-card>
-    <div class="row">
-      <div class="col-12 col-sm-4">
+      <div class="col-12 col-md-4">
         <nb-card size="giant" accent="danger">
           <nb-card-header>
             <div class="d-flex flex-row align-items-center">
@@ -24,138 +12,81 @@
             </div>
           </nb-card-header>
           <nb-card-body>
-            <nb-accordion multi>
-              <nb-accordion-item>
-                <nb-accordion-item-header>
-                  Product Details
-                </nb-accordion-item-header>
-                <nb-accordion-item-body>
-                  A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-                  Originally, nebula was a name for any diffuse astronomical object,
-                  including galaxies beyond the Milky Way.
-                </nb-accordion-item-body>
-              </nb-accordion-item>
-
-              <nb-accordion-item>
-                <nb-accordion-item-header>
-                  Reviews
-                </nb-accordion-item-header>
-                <nb-accordion-item-body>
-                  A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-                  Originally, nebula was a name for any diffuse astronomical object,
-                  including galaxies beyond the Milky Way.
-                </nb-accordion-item-body>
-              </nb-accordion-item>
-
-              <nb-accordion-item>
-                <nb-accordion-item-header>
-                  Edit
-                </nb-accordion-item-header>
-                <nb-accordion-item-body>
-                  A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-                  Originally, nebula was a name for any diffuse astronomical object,
-                  including galaxies beyond the Milky Way.
-                </nb-accordion-item-body>
-              </nb-accordion-item>
-            </nb-accordion>
-            <div class="row">
-              <nb-card>
-                <nb-card-body>
-
-                  <nb-tabset>
-                    <nb-tab tabTitle="Users" badgeText="99+" badgeStatus="danger">
-                      <p>List of <strong>users</strong>.</p>
-                    </nb-tab>
-                    <nb-tab tabTitle="Orders" badgeText="12" badgePosition="bottom right" badgeStatus="warning">
-                      <p>List of <strong>orders</strong>.</p>
-                    </nb-tab>
-                    <nb-tab tabTitle="Transactions" badgeText="new" badgePosition="top right" badgeStatus="success">
-                      <p>List of <strong>transactions</strong>.</p>
-                    </nb-tab>
-                    <nb-tab tabTitle="Notifications" badgeDot badgePosition="center start" badgeStatus="danger">
-                      <p>List of <strong>notifications</strong>.</p>
-                    </nb-tab>
-                  </nb-tabset>
-
-                </nb-card-body>
-              </nb-card>
-            </div>
+            A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
+            Originally, nebula was a name for any diffuse astronomical object,
+            including galaxies beyond the Milky Way.
           </nb-card-body>
         </nb-card>
       </div>
-      <div class="col-12 col-sm-6 col-md-8">
-        <nb-card size="small">
+      <div class="col-12 col-md-3">
+        <app-status-card></app-status-card>
+        <app-status-card></app-status-card>
+        <nb-card>
           <nb-card-header>
-            Visitors
+            <h1 class="h5">Selected date: {{ date | date }}</h1>
           </nb-card-header>
-          <nb-list>
-            <nb-list-item *ngFor="let user of users">
-              <nb-user [name]="user.name" [title]="user.title">
-              </nb-user>
-            </nb-list-item>
-          </nb-list>
+          <nb-card-body>
+            <nb-calendar [(date)]="date">
+            </nb-calendar>
+          </nb-card-body>
         </nb-card>
-        <div class="row">
-          <div class="col-4">
-            <nb-card>
-              <nb-card-header>
-                <h1 class="h5">Selected date: {{ date | date }}</h1>
-              </nb-card-header>
-              <nb-card-body>
-                <nb-calendar [(date)]="date">
-                </nb-calendar>
-              </nb-card-body>
-            </nb-card>
-          </div>
-          <div class="col-4">
-            <app-chat></app-chat>
-          </div>
-        </div>
       </div>
-
+      <div class="col-12 col-md-5">
+        <nb-card>
+          <nb-card-header>
+            Logs
+          </nb-card-header>
+          <nb-card-body>
+            <nb-tabset fullWidth>
+              <nb-tab tabTitle="All" badgeText="99+" badgeStatus="danger">
+                <p>List of <strong>users</strong>.</p>
+              </nb-tab>
+              <nb-tab tabTitle="Urgent" badgeText="12" badgePosition="bottom right" badgeStatus="warning">
+                <p>List of <strong>orders</strong>.</p>
+              </nb-tab>
+              <nb-tab tabTitle="Visitors" badgeText="new" badgePosition="top right" badgeStatus="success">
+                <nb-list>
+                  <nb-list-item *ngFor="let user of users">
+                    <nb-user [name]="user.name" [title]="user.title">
+                    </nb-user>
+                  </nb-list-item>
+                </nb-list>
+              </nb-tab>
+            </nb-tabset>
+          </nb-card-body>
+        </nb-card>
+      </div>
     </div>
-    <!-- <div class="container">
     <div class="row">
-      <div class="col-md-4 col-xl-3">
-        <div class="card bg-c-blue order-card">
-          <div class="card-block">
-            <h6 class="m-b-20">Orders Received</h6>
-            <h2 class="text-right"><i class="fa fa-cart-plus f-left"></i><span>486</span></h2>
-            <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>
-          </div>
-        </div>
+      <div class="col-12 col-lg-8">
+        <nb-card>
+          <nb-card-header>Video monitor</nb-card-header>
+          <nb-card-body>
+            <app-video-monitor></app-video-monitor>
+          </nb-card-body>
+        </nb-card>
       </div>
-
-      <div class="col-md-4 col-xl-3">
-        <div class="card bg-c-green order-card">
-          <div class="card-block">
-            <h6 class="m-b-20">Orders Received</h6>
-            <h2 class="text-right"><i class="fa fa-rocket f-left"></i><span>486</span></h2>
-            <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 col-xl-3">
-        <div class="card bg-c-yellow order-card">
-          <div class="card-block">
-            <h6 class="m-b-20">Orders Received</h6>
-            <h2 class="text-right"><i class="fa fa-refresh f-left"></i><span>486</span></h2>
-            <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 col-xl-3">
-        <div class="card bg-c-pink order-card">
-          <div class="card-block">
-            <h6 class="m-b-20">Orders Received</h6>
-            <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>486</span></h2>
-            <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>
-          </div>
-        </div>
+      <div class="col-12 col-lg-4">
+        <app-chat></app-chat>
       </div>
     </div>
-  </div> -->
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <nb-card>
+          <nb-card-header>Chart line</nb-card-header>
+          <nb-card-body>
+            <app-chartjs-line></app-chartjs-line>
+          </nb-card-body>
+        </nb-card>
+      </div>
+      <div class="col-12 col-lg-6">
+        <nb-card>
+          <nb-card-header>Bar</nb-card-header>
+          <nb-card-body>
+            <app-chartjs-pie></app-chartjs-pie>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
   </div>
 </app-navbar>

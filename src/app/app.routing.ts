@@ -6,6 +6,7 @@ import { DetailsComponent } from "./pages/details/details.component";
 import { Error404Component } from "./pages/error404/error404.component";
 import { HomeComponent } from "./pages/home/home.component";
 import { LoginComponent } from "./pages/login/login.component";
+import { VideoCallComponent } from "./pages/video-call/video-call.component";
 
 // const routerOptions: ExtraOptions = {
 //   scrollPositionRestoration: 'enabled',
@@ -16,6 +17,7 @@ import { LoginComponent } from "./pages/login/login.component";
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'details/:username', component: DetailsComponent },
+  { path: 'video-call/:username', component: VideoCallComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: Error404Component }
 ]

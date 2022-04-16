@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { NbDialogService } from '@nebular/theme';
+import { CallingDialogComponent } from 'src/app/components/calling-dialog/calling-dialog.component';
 
 interface Data { sdp: string; type: string }
 
@@ -14,6 +15,7 @@ export class VideoCallComponent implements OnInit {
 
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('remoteVideo') remoteVideo!: ElementRef<HTMLVideoElement>;
+  @ViewChild('dialog') dialog: any;
   servers = {
     iceServers: [
       {
@@ -29,14 +31,18 @@ export class VideoCallComponent implements OnInit {
   private localStream!: MediaStream;
   private remoteStream!: MediaStream;
   callId!: string;
-  constructor(private firestore: AngularFirestore, private dialogService: NbDialogService) { }
+
+  constructor(private firestore: AngularFirestore) {
+
+  }
 
   ngOnInit(): void {
+    this.openUserMedia()
   }
 
   public async openUserMedia() {
     const stream = await navigator.mediaDevices.getUserMedia(
-      { video: true, audio: true });
+      { video: true });
     this.localStream = stream;
     this.localVideo.nativeElement.srcObject = this.localStream;
 

@@ -1,14 +1,5 @@
-<ng-template #dialog let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header>Template Dialog</nb-card-header>
-    <nb-card-body>{{ data }}</nb-card-body>
-    <nb-card-footer>
-      <button nbButton (click)="ref.close()">Close Dialog</button>
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
 <app-navbar>
-  <div class="container-fluid b">
+  <!-- <div class="container-fluid b">
     <h2>1. Start your Webcam</h2>
     <div class="videos">
       <span>
@@ -36,6 +27,28 @@
     <h2>4. Hangup</h2>
 
     <button id="hangupButton" disabled>Hangup</button>
+  </div> -->
+  <div class="video-call-wrapper">
+    <div class="video-participant">
+      <div class="participant-actions">
+        <button class="btn-mute"></button>
+        <button class="btn-camera"></button>
+      </div>
+      <a href="#" class="name-tag">Emmy Lou</a>
+      <video #remoteVideo id="remoteVideo" autoplay playsinline></video>
+    </div>
+    <div class="local-stream">
+      <a href="#" class="name-tag">You</a>
+      <video #localVideo id="webcamVideo" autoplay playsinline></video>
+    </div>
   </div>
+
+  <div class="video-call-actions">
+    <button class="video-action-button mic"></button>
+    <button class="video-action-button camera"></button>
+    <button outline class="video-action-button endcall">Leave</button>
+    <button outline class="video-action-button maximize"></button>
+  </div>
+
 
 </app-navbar>

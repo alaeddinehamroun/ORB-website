@@ -1,12 +1,14 @@
-import { CommonModule } from "@angular/common";
+
 import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { ExtraOptions, RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { DetailsComponent } from "./pages/details/details.component";
 import { Error404Component } from "./pages/error404/error404.component";
 import { HomeComponent } from "./pages/home/home.component";
-import { LoginComponent } from "./pages/login/login.component";
+
 import { VideoCallComponent } from "./pages/video-call/video-call.component";
+
+import { NbAuthComponent, NbLoginComponent, NbLogoutComponent, NbRegisterComponent, NbRequestPasswordComponent, NbResetPasswordComponent } from "@nebular/auth";
+import { AuthGuard } from "./guards/auth-guard.service";
 
 // const routerOptions: ExtraOptions = {
 //   scrollPositionRestoration: 'enabled',
@@ -15,11 +17,44 @@ import { VideoCallComponent } from "./pages/video-call/video-call.component";
 // }
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'details/:username', component: DetailsComponent },
-  { path: 'video-call/:username', component: VideoCallComponent },
-  { path: '', component: HomeComponent },
-  { path: '**', component: Error404Component }
+  {
+    path: '', component: HomeComponent, canActivate: [AuthGuard], // here we tell Angular to check the access with our AuthGuard
+  },
+  {
+    path: '',
+    component: NbAuthComponent,
+    children: [
+      {
+        path: 'login',
+        component: NbLoginComponent,
+      },
+      {
+        path: 'register',
+        component: NbRegisterComponent,
+      },
+      {
+        path: 'logout',
+        component: NbLogoutComponent,
+      },
+      {
+        path: 'request-password',
+        component: NbRequestPasswordComponent,
+      },
+      {
+        path: 'reset-password',
+        component: NbResetPasswordComponent,
+      },
+    ],
+  },
+  {
+    path: 'details/:username', component: DetailsComponent, canActivate: [AuthGuard], // here we tell Angular to check the access with our AuthGuard
+  },
+  {
+    path: 'video-call/:username', component: VideoCallComponent, canActivate: [AuthGuard], // here we tell Angular to check the access with our AuthGuard
+  },
+  { path: '**', component: Error404Component },
+
+
 ]
 @NgModule({
   imports: [
@@ -33,3 +68,4 @@ const routes: Routes = [
   ],
 })
 export class AppRoutingModule { }
+

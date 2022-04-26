@@ -1,10 +1,12 @@
-@use 'themes' as *;
+@use "themes" as *;
 
-@use '@nebular/theme/styles/globals' as *;
+@use "@nebular/theme/styles/globals" as *;
+@use '@nebular/auth/styles/globals' as *;
 
 @include nb-install() {
   @include nb-theme-global();
-};
+  @include nb-auth-global(); // append the install mixin inside of the nb-install
+}
 /* You can add global styles to this file, and also import other style files */
 /* body {
   padding-top: 3.5rem;
@@ -17,8 +19,6 @@ nb-layout-header nav {
 nb-layout-header nav nb-icon:hover {
   transform: rotate(360deg);
 }
-nb-layout-header nav nb-icon{
+nb-layout-header nav nb-icon {
   transition: all 1s;
 }
-
-

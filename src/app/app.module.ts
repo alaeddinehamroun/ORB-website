@@ -21,7 +21,6 @@ import { SharedModule } from './shared/shared.module';
 import { DetailsComponent } from './pages/details/details.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { CardComponent } from './components/card/card.component';
 import { VideoCallComponent } from './pages/video-call/video-call.component';
@@ -33,6 +32,9 @@ import { ChartModule } from 'angular2-chartjs';
 import { ChartjsPieComponent } from './components/chartjs-pie/chartjs-pie.component';
 import { VideoMonitorComponent } from './components/video-monitor/video-monitor.component';
 import { CallingDialogComponent } from './components/calling-dialog/calling-dialog.component';
+import { NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
+import { NbFirebaseAuthModule, NbFirebasePasswordStrategy } from '@nebular/firebase-auth';
+import { AuthGuard } from './guards/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -41,14 +43,13 @@ import { CallingDialogComponent } from './components/calling-dialog/calling-dial
     DetailsComponent,
     Error404Component,
     HomeComponent,
-    LoginComponent,
     VideoCallComponent,
     ChatComponent,
     StatusCardComponent,
     ChartjsLineComponent,
     ChartjsPieComponent,
     VideoMonitorComponent,
-    CallingDialogComponent
+    CallingDialogComponent,
   ],
   imports: [
     HttpClientModule,
@@ -73,15 +74,29 @@ import { CallingDialogComponent } from './components/calling-dialog/calling-dial
     NbAccordionModule,
     NbTabsetModule,
     NbCalendarModule,
+    NbFirebaseAuthModule,
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),
+
+    NbAuthModule.forRoot({
+      strategies: [
+        NbFirebasePasswordStrategy.setup({
+          name: 'email',
+
+        }),
+      ],
+      forms: {},
+    }),
+
     NbToggleModule,
     NbDialogModule.forRoot(),
     ChartModule,
-    SharedModule,
+
+    SharedModule
   ],
-  providers: [ChatShowcaseService],
+  providers: [ChatShowcaseService,
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -13,7 +13,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NbThemeModule, NbButtonModule, NbCardModule, NbLayoutModule, NbIconModule, NbActionsModule, NbListModule, NbUserModule, NbAccordionModule, NbTableModule, NbTabsetModule, NbCalendarModule, NbChatModule, NbToggleModule, NbDialogModule } from '@nebular/theme';
+import { NbThemeModule, NbButtonModule, NbCardModule, NbLayoutModule, NbIconModule, NbActionsModule, NbListModule, NbUserModule, NbAccordionModule, NbTableModule, NbTabsetModule, NbCalendarModule, NbChatModule, NbToggleModule, NbDialogModule, NbInputModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { SharedModule } from './shared/shared.module';
@@ -35,6 +35,7 @@ import { CallingDialogComponent } from './components/calling-dialog/calling-dial
 import { NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
 import { NbFirebaseAuthModule, NbFirebasePasswordStrategy } from '@nebular/firebase-auth';
 import { AuthGuard } from './guards/auth-guard.service';
+import { AddPatientDialogComponent } from './components/add-patient-dialog/add-patient-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { AuthGuard } from './guards/auth-guard.service';
     ChartjsPieComponent,
     VideoMonitorComponent,
     CallingDialogComponent,
+    AddPatientDialogComponent,
   ],
   imports: [
     HttpClientModule,
@@ -75,6 +77,7 @@ import { AuthGuard } from './guards/auth-guard.service';
     NbTabsetModule,
     NbCalendarModule,
     NbFirebaseAuthModule,
+    NbInputModule,
     NbChatModule.forRoot({
       messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
     }),

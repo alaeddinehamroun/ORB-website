@@ -1,38 +1,15 @@
 <app-navbar>
-  <!-- <div class="container-fluid b">
-    <h2>1. Start your Webcam</h2>
-    <div class="videos">
-      <span>
-        <h3>Local Stream</h3>
-        <video #localVideo id="webcamVideo" autoplay playsinline></video>
-      </span>
-      <span>
-        <h3>Remote Stream</h3>
-        <video #remoteVideo id="remoteVideo" autoplay playsinline></video>
-      </span>
-
-
-    </div>
-
-    <button id="webcamButton" (click)="openUserMedia()">Start webcam</button>
-    <h2>2. Create a new Call</h2>
-    <button id="callButton" (click)="call()">Create Call (offer)</button>
-
-    <h2>3. Join a Call</h2>
-    <p>Answer the call from a different browser window or device</p>
-
-    <input id="callInput" [(ngModel)]="this.callId" />
-    <button id="answerButton" (click)="answer()">Answer</button>
-
-    <h2>4. Hangup</h2>
-
-    <button id="hangupButton" disabled>Hangup</button>
-  </div> -->
   <div class="video-call-wrapper">
     <div class="video-participant">
       <div class="participant-actions">
-        <button class="btn-mute"></button>
-        <button class="btn-camera"></button>
+        <button class="btn-mute">
+          <nb-icon icon="volume-off-outline" *ngIf="this.remoteAudioStatus" status="basic"></nb-icon>
+          <nb-icon icon="volume-up-outline" *ngIf="!this.remoteAudioStatus" status="basic"></nb-icon>
+        </button>
+        <button class="btn-camera">
+          <nb-icon icon="video-off-outline" *ngIf="this.remoteVideoStatus" status="basic"></nb-icon>
+          <nb-icon icon="video-outline" *ngIf="!this.remoteVideoStatus" status="basic"></nb-icon>
+        </button>
       </div>
       <a href="#" class="name-tag">Emmy Lou</a>
       <video #remoteVideo id="remoteVideo" autoplay playsinline></video>
@@ -44,10 +21,20 @@
   </div>
 
   <div class="video-call-actions">
-    <button class="video-action-button mic"></button>
-    <button class="video-action-button camera"></button>
-    <button outline class="video-action-button endcall">Leave</button>
-    <button outline class="video-action-button maximize"></button>
+    <button class="video-action-button" (click)="toggleAudio()">
+      <nb-icon icon="volume-off-outline" *ngIf="this.audioStatus"></nb-icon>
+      <nb-icon icon="volume-up-outline" *ngIf="!this.audioStatus"></nb-icon>
+    </button>
+    <button class="video-action-button" (click)="toggleVideo()">
+      <nb-icon icon="video-off-outline" *ngIf="this.videoStatus"></nb-icon>
+      <nb-icon icon="video-outline" *ngIf="!this.videoStatus"></nb-icon>
+    </button>
+    <button outline class="video-action-button endcall" (click)="hangup()">
+      <nb-icon icon="phone-missed-outline"></nb-icon> Leave
+    </button>
+    <button outline class="video-action-button">
+      <nb-icon icon="expand-outline"></nb-icon>
+    </button>
   </div>
 
 

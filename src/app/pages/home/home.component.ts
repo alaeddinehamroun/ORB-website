@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { NbDialogService } from '@nebular/theme';
+import { Observable } from 'rxjs';
+import { AddPatientDialogComponent } from 'src/app/components/add-patient-dialog/add-patient-dialog.component';
+import { Patient } from 'src/app/models/patient.model';
+import { PatientService } from 'src/app/services/patient.service';
 
 @Component({
   selector: 'app-home',
@@ -6,11 +11,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  patients!: Observable<Patient[]>;
 
-  constructor() { }
+  constructor(private patientService: PatientService,
+    private dialogService: NbDialogService) {
+      this.patients = this.patientService.getPatients();
+  }
 
   ngOnInit(): void {
 
+  }
+
+  addPatient(name: string) {
+    this.patientService.addPatient(name);
+  }
+  open() {
+    this.dialogService.open(AddPatientDialogComponent)
+      .onClose.subscribe(name =>
+        this.addPatient(name)
+      );
   }
 
 }

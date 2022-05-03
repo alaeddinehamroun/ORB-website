@@ -6,15 +6,16 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./status-card.component.scss']
 })
 export class StatusCardComponent implements OnInit {
-  toggleLight = true;
+  @Input() tool! : string;
+  toggleTool = true;
   constructor() {
 
   }
 
   ngOnInit(): void {
   }
-  lightChanged(){
-    console.log(this.toggleLight)
+  toolChanged(){
+    console.log(this.toggleTool)
   }
 
 }

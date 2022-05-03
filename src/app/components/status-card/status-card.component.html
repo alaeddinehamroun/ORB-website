@@ -1,9 +1,9 @@
-<nb-card [ngClass]="{'off': !toggleLight}">
+<nb-card [ngClass]="{'off': !toggleTool}">
   <nb-card-body>
-    <nb-toggle status="success" (click)="lightChanged()" [(ngModel)]="toggleLight">
+    <nb-toggle [status]="toggleTool ? 'success' : 'danger'" (click)="toolChanged()" [(ngModel)]="toggleTool">
       <div class="details">
-        <div class="title h5">Light</div>
-        <div class="status paragraph-2">{{ toggleLight ? 'ON' : 'OFF' }}</div>
+        <div class="title h5">{{tool}}</div>
+        <div class="status paragraph-2">{{ toggleTool ? 'ON' : 'OFF' }}</div>
       </div>
     </nb-toggle>
   </nb-card-body>

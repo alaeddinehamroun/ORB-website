@@ -1,35 +1,17 @@
-<!-- <div class="card p-3 mb-2">
-  <div class="card-body">
-    <div class="d-flex justify-content-between card-title">
-      <div class="d-flex flex-row align-items-center">
-        <div class="icon"> <i class="uil uil-user"></i> </div>
-        <div class="ms-2 c-details">
-          <h6 class="mb-0">Mailchimp</h6> <span>1 days ago</span>
-        </div>
-      </div>
-      <div class="badge"> <span>Online</span> </div>
-    </div>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-      content.</p>
-    <a [routerLink]="['/details', 'Mailchimp']" routerLinkActive="active" class="btn btn-primary">More Details</a>
-  </div>
-</div> -->
-<nb-card size="medium" status="success">
+<nb-card [size]="size" [status]="patient.isOnline ? 'success' : 'danger'">
   <nb-card-header>
     <div class="d-flex flex-row align-items-center">
-      <div class="icon"> <i class="uil uil-user"></i> </div>
+      <div class="icon"> <img src="{{patient.photoURL}}" alt="photo"> </div>
       <div class="ms-2 c-details">
-        <h6 class="mb-0">Mailchimp</h6>
-        <div class="badge"> <span>Online</span> </div>
+        <h6 class="mb-0">{{patient.displayName}}</h6>
+        <div class="badge" [ngStyle]="{'color': patient.isOnline ? '#24dc9c' : 'red'}"> <span>{{patient.isOnline ? "Online": "Offline" }}</span> </div>
       </div>
     </div>
   </nb-card-header>
   <nb-card-body>
-    A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-    Originally, nebula was a name for any diffuse astronomical object,
-    including galaxies beyond the Milky Way.
+    {{patient.description}}
   </nb-card-body>
-  <nb-card-footer>
-    <a [routerLink]="['/details', 'Mailchimp']" routerLinkActive="active" class="btn btn-primary">More Details</a>
+  <nb-card-footer *ngIf="size == 'medium'">
+    <a [routerLink]="['/details', this.patient.displayName]" [state]="{patient}" routerLinkActive="active" class="btn btn-primary">More Details</a>
   </nb-card-footer>
 </nb-card>

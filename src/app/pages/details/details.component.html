@@ -2,25 +2,13 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 col-md-4">
-        <nb-card size="giant" accent="danger">
-          <nb-card-header>
-            <div class="d-flex flex-row align-items-center">
-              <div class="icon"> <i class="uil uil-user"></i> </div>
-              <div class="ms-2 c-details">
-                <h6 class="mb-0">Mailchimp</h6>
-              </div>
-            </div>
-          </nb-card-header>
-          <nb-card-body>
-            A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
-            Originally, nebula was a name for any diffuse astronomical object,
-            including galaxies beyond the Milky Way.
-          </nb-card-body>
-        </nb-card>
+        <app-card  [patient]="patient" size="giant"></app-card>
       </div>
       <div class="col-12 col-md-3">
-        <app-status-card></app-status-card>
-        <app-status-card></app-status-card>
+        <app-status-card tool="Ligth"></app-status-card>
+        <app-status-card tool="TV"></app-status-card>
+        <app-status-card tool="Air conditioner"></app-status-card>
+
         <nb-card>
           <nb-card-header>
             <h1 class="h5">Selected date: {{ date | date }}</h1>

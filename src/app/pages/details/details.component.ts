@@ -1,4 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Patient } from 'src/app/models/patient.model';
+import { PatientService } from 'src/app/services/patient.service';
 
 @Component({
   selector: 'app-details',
@@ -16,8 +19,23 @@ export class DetailsComponent implements OnInit {
 
   date = new Date();
   messages!: any[];
-  constructor() { }
+  patient!: any;
+  constructor(private route: ActivatedRoute,
+    private patientService: PatientService,) {
+
+  }
   ngOnInit(): void {
+    this.route.params.subscribe((v) =>
+    {
+      this.patientService.getPatientByName(v['username']).subscribe((v) =>{
+        console.log(v[0])
+        this.patient = v[0]
+      }
+
+      );
+      console.log(this.patient)
+    });
+
   }
 
 

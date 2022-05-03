@@ -1,7 +1,7 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { NbDialogService } from '@nebular/theme';
-import { CallingDialogComponent } from 'src/app/components/calling-dialog/calling-dialog.component';
+import { Router } from '@angular/router';
+import { NbAuthService } from '@nebular/auth';
 
 interface Data { sdp: string; type: string }
 
@@ -11,11 +11,15 @@ interface Data { sdp: string; type: string }
   styleUrls: ['./video-call.component.scss']
 })
 
-export class VideoCallComponent implements OnInit {
+export class VideoCallComponent implements OnInit, OnDestroy {
 
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('remoteVideo') remoteVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('dialog') dialog: any;
+  audioStatus: boolean = true;
+  videoStatus: boolean = true;
+  remoteAudioStatus: boolean = false;
+  remoteVideoStatus: boolean = false;
   servers = {
     iceServers: [
       {
@@ -31,18 +35,36 @@ export class VideoCallComponent implements OnInit {
   private localStream!: MediaStream;
   private remoteStream!: MediaStream;
   callId!: string;
+  user: any
+  constructor(private firestore: AngularFirestore, private authService: NbAuthService, private router: Router) {
+    this.authService.onTokenChange()
+      .subscribe((token: any) => {
 
-  constructor(private firestore: AngularFirestore) {
+        if (token.isValid()) {
+          this.user = token.getPayload(); // here we receive a payload from the token and assigns it to our `user` variable
+          this.callId = this.user.user_id;
+        }
 
+      });
   }
 
-  ngOnInit(): void {
-    this.openUserMedia()
+  async ngOnInit(): Promise<void> {
+
+    await this.openUserMedia();
+    await this.answer();
   }
 
+  public toggleAudio() {
+    this.localStream.getTracks()[0].enabled = !this.localStream.getTracks()[0].enabled;
+    this.audioStatus = this.localStream.getTracks()[0].enabled;
+  }
+  public toggleVideo() {
+    this.localStream.getTracks()[1].enabled = !this.localStream.getTracks()[1].enabled;
+    this.videoStatus = this.localStream.getTracks()[1].enabled;
+  }
   public async openUserMedia() {
     const stream = await navigator.mediaDevices.getUserMedia(
-      { video: true });
+      { video: true, audio: true });
     this.localStream = stream;
     this.localVideo.nativeElement.srcObject = this.localStream;
 
@@ -52,7 +74,7 @@ export class VideoCallComponent implements OnInit {
   }
   public async call() {
 
-    const roomRef = this.firestore.collection('rooms').doc();
+    const roomRef = this.firestore.collection('rooms').doc(this.callId);
 
     console.log('Create PeerConnection with configuration: ', this.servers);
     this.peerConnection = new RTCPeerConnection(this.servers);
@@ -81,7 +103,8 @@ export class VideoCallComponent implements OnInit {
         sdp: offer.sdp,
       },
     };
-    await roomRef.set(roomWithOffer);
+    await roomRef.set(roomWithOffer,)
+
     // Code for creating a room above
 
     this.peerConnection.ontrack = event => {
@@ -122,7 +145,7 @@ export class VideoCallComponent implements OnInit {
 
   public async answer() {
 
-    const roomRef = this.firestore.collection('rooms').doc(this.callId);
+    const roomRef = this.firestore.collection('rooms').doc("bRfTIinFWbPsnQ54pQon");
 
     roomRef.get().subscribe(async (roomSnapshot: any) => {
       console.log(roomSnapshot.exists);
@@ -147,9 +170,10 @@ export class VideoCallComponent implements OnInit {
             this.remoteStream.addTrack(track);
             console.log('remote stream' + this.remoteStream)
           });
+          this.remoteAudioStatus = this.remoteStream.getTracks()[0].enabled;
+          this.remoteVideoStatus = this.remoteStream.getTracks()[1].enabled;
+
         }
-
-
         // Code for creating SDP answer below
         const offer = roomSnapshot.data().offer;
         console.log('Got offer:', offer);
@@ -183,7 +207,12 @@ export class VideoCallComponent implements OnInit {
     });
 
   }
+  public async hangup() {
 
+
+    this.router.navigate(['/details/Mailchimp']);
+
+  }
   public registerPeerConnectionListeners() {
     this.peerConnection.addEventListener('icegatheringstatechange', () => {
       console.log(
@@ -203,4 +232,22 @@ export class VideoCallComponent implements OnInit {
         `ICE connection state change: ${this.peerConnection.iceConnectionState}`);
     });
   }
+  ngOnDestroy(): void {
+    const roomRef = this.firestore.collection('rooms').doc(this.callId);
+    this.localStream.getTracks().forEach(track => {
+      track.stop();
+    });
+
+    if (this.remoteStream) {
+      this.remoteStream.getTracks().forEach(track => track.stop());
+    }
+    if (this.peerConnection) {
+      this.peerConnection.close();
+    }
+
+    // Delete room on hangup
+    roomRef.delete();
+
+  }
+
 }

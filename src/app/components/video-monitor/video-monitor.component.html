@@ -1,41 +1,8 @@
-<nb-card size="giant">
+<nb-card size="medium">
+  <nb-card-body>
+    A nebula is an interstellar cloud of dust, hydrogen, helium and other ionized gases.
+    Originally, nebula was a name for any diffuse astronomical object,
+    including galaxies beyond the Milky Way.
+  </nb-card-body>
 
-  <div class="grid-container">
-
-    <div class="single-view" *ngIf="isSingleView">
-      <div class="camera" [style.background-image]="'url(' + selectedCamera.source + ')'">
-        <span class="camera-name">{{ selectedCamera.title }}</span>
-      </div>
-    </div>
-
-    <div class="grid-view" *ngIf="!isSingleView">
-      <div class="camera" *ngFor="let camera of cameras" [style.background-image]="'url(' + camera.source + ')'"
-        (click)="selectCamera(camera)">
-        <span class="camera-name">{{ camera.title }}</span>
-      </div>
-    </div>
-
-  </div>
-  <nb-card-footer>
-    <nb-actions [size]="actionSize" fullWidth>
-      <nb-action>
-        <nb-icon icon="pause-circle-outline" pack="eva"></nb-icon>
-        Pause
-      </nb-action>
-      <nb-action>
-        <nb-icon icon="list-outline" pack="eva"></nb-icon>
-        Logs
-      </nb-action>
-      <nb-action [routerLink]="['/video-call','Mailchimp']">
-        <nb-icon icon="phone-outline" pack="eva">
-        </nb-icon>
-        <a [routerLink]="['/video-call', 'Mailchimp']" routerLinkActive="active" class="btn btn-primary">Call</a>
-
-      </nb-action>
-      <nb-action>
-        <nb-icon icon="settings-2-outline" pack="eva"></nb-icon>
-        Setup
-      </nb-action>
-    </nb-actions>
-  </nb-card-footer>
 </nb-card>

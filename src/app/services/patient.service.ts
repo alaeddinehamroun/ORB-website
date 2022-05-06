@@ -31,12 +31,32 @@ export class PatientService {
 
   getPatients() {
     const patientRef = this.firestore.collection<Patient>('patients', ref => ref.where('supervisorEmail', '==', this.user.email))
-    return patientRef.valueChanges();
+    return patientRef.valueChanges({ idField: 'id' });
 
   }
-  getPatientByName(name: string){
-    const patientRef = this.firestore.collection<Patient>('patients', ref => ref.where('displayName', '==', name))
-    return patientRef.valueChanges();
+  getPatientById(id: string){
+    const patientRef = this.firestore.collection<Patient>('patients').doc(id);
+    return patientRef.valueChanges({ idField: 'id' });
+
+  }
+
+  toggleDeviceStatus(id: string, deviceStatus: boolean, device: string) {
+    console.log(id)
+    const patientRef = this.firestore.collection('patients').doc(id);
+    if (device == "lights")
+      patientRef.update({
+        'devices.lights': deviceStatus
+      })
+    if (device == "ac")
+      patientRef.update({
+        'devices.ac': deviceStatus
+
+      })
+      if (device == "tv")
+      patientRef.update({
+        'devices.tv': deviceStatus
+
+      })
 
   }
 }

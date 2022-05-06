@@ -1,5 +1,8 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbWindowService } from '@nebular/theme';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { VideoMonitorComponent } from 'src/app/components/video-monitor/video-monitor.component';
 import { Patient } from 'src/app/models/patient.model';
 import { PatientService } from 'src/app/services/patient.service';
 
@@ -9,6 +12,8 @@ import { PatientService } from 'src/app/services/patient.service';
   styleUrls: ['./details.component.scss']
 })
 export class DetailsComponent implements OnInit {
+  @ViewChild('contentTemplate') contentTemplate!: TemplateRef<any>;
+
   users: { name: string, title: string }[] = [
     { name: 'Carla Espinosa', title: 'Nurse' },
     { name: 'Bob Kelso', title: 'Doctor of Medicine' },
@@ -19,24 +24,38 @@ export class DetailsComponent implements OnInit {
 
   date = new Date();
   messages!: any[];
-  patient!: any;
+  patient!: Patient;
+  loading: boolean = true;
+
   constructor(private route: ActivatedRoute,
-    private patientService: PatientService,) {
+    private patientService: PatientService,
+    private windowService: NbWindowService) {
 
   }
   ngOnInit(): void {
-    this.route.params.subscribe((v) =>
-    {
-      this.patientService.getPatientByName(v['username']).subscribe((v) =>{
-        console.log(v[0])
-        this.patient = v[0]
-      }
+    this.route.params.subscribe((v) => {
+      this.patientService.getPatientById(v['id']).subscribe((p: any) => {
+        if (p !=undefined) {
+          console.log(v)
+          this.patient = p;
+          console.log(this.patient)
+          this.loading = false;
+        }
 
+
+      }
       );
-      console.log(this.patient)
     });
 
   }
 
-
+  onChange($event: boolean, device: string) {
+    console.log(this.patient)
+    this.patientService.toggleDeviceStatus(this.patient.id, $event, device)
+  }
+  openWindow() {
+    this.windowService.open(
+      VideoMonitorComponent, {title: "Video monitor"}
+    );
+  }
 }

@@ -17,7 +17,7 @@ export class VideoMonitorComponent implements OnInit {
 
   private destroy$ = new Subject<void>();
 
-  cameras!: any[];
+  camera!: any;
   selectedCamera!: Camera;
   isSingleView = false;
   actionSize: NbComponentSize = 'medium';
@@ -26,24 +26,13 @@ export class VideoMonitorComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.cameras = [
+    this.camera =
       {
         title: 'Camera #1',
         source: 'assets/images/camera1.jpg',
-      },
-      {
-        title: 'Camera #2',
-        source: 'assets/images/camera2.jpg',
-      },
-      {
-        title: 'Camera #3',
-        source: 'assets/images/camera3.jpg',
-      },
-      {
-        title: 'Camera #4',
-        source: 'assets/images/camera4.jpg',
-      },
-    ];
+      }
+
+
   }
 
   ngOnDestroy() {

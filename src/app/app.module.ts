@@ -13,7 +13,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NbThemeModule, NbButtonModule, NbCardModule, NbLayoutModule, NbIconModule, NbActionsModule, NbListModule, NbUserModule, NbAccordionModule, NbTableModule, NbTabsetModule, NbCalendarModule, NbChatModule, NbToggleModule, NbDialogModule, NbInputModule } from '@nebular/theme';
+import { NbThemeModule, NbButtonModule, NbCardModule, NbLayoutModule, NbIconModule, NbActionsModule, NbListModule, NbUserModule, NbAccordionModule, NbTableModule, NbTabsetModule, NbCalendarModule, NbChatModule, NbToggleModule, NbDialogModule, NbInputModule, NbWindowModule, NbStepperModule, NbSpinnerModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { SharedModule } from './shared/shared.module';
@@ -36,6 +36,7 @@ import { NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
 import { NbFirebaseAuthModule, NbFirebasePasswordStrategy } from '@nebular/firebase-auth';
 import { AuthGuard } from './guards/auth-guard.service';
 import { AddPatientDialogComponent } from './components/add-patient-dialog/add-patient-dialog.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -78,9 +79,10 @@ import { AddPatientDialogComponent } from './components/add-patient-dialog/add-p
     NbCalendarModule,
     NbFirebaseAuthModule,
     NbInputModule,
-    NbChatModule.forRoot({
-      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-    }),
+    NbChatModule,
+    NbWindowModule.forRoot(),
+    NbStepperModule,
+    NbSpinnerModule,
 
     NbAuthModule.forRoot({
       strategies: [
@@ -98,6 +100,7 @@ import { AddPatientDialogComponent } from './components/add-patient-dialog/add-p
 
     SharedModule
   ],
+
   providers: [ChatShowcaseService,
     AuthGuard],
   bootstrap: [AppComponent]

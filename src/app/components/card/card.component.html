@@ -4,7 +4,11 @@
       <div class="icon"> <img src="{{patient.photoURL}}" alt="photo"> </div>
       <div class="ms-2 c-details">
         <h6 class="mb-0">{{patient.displayName}}</h6>
-        <div class="badge" [ngStyle]="{'color': patient.isOnline ? '#24dc9c' : 'red'}"> <span>{{patient.isOnline ? "Online": "Offline" }}</span> </div>
+        <div class="badge" [ngStyle]="{'color': patient.isOnline ? '#24dc9c' : 'red'}">
+          <span>{{patient.isOnline ?
+            "Online": "Offline" }}
+          </span>
+        </div>
       </div>
     </div>
   </nb-card-header>
@@ -12,6 +16,15 @@
     {{patient.description}}
   </nb-card-body>
   <nb-card-footer *ngIf="size == 'medium'">
-    <a [routerLink]="['/details', this.patient.displayName]" [state]="{patient}" routerLinkActive="active" class="btn btn-primary">More Details</a>
+    <a [routerLink]="['/details', this.patient.id]" routerLinkActive="active" class="btn btn-primary">More
+      Details</a>
+  </nb-card-footer>
+  <nb-card-footer *ngIf="size == 'giant'">
+    Situation: {{patient.status}}
+  </nb-card-footer>
+  <nb-card-footer *ngIf="size == 'giant'">
+    <button nbButton status="success" [routerLink]="['/video-call', this.patient.id]" routerLinkActive="active">
+      Video Call
+    </button>
   </nb-card-footer>
 </nb-card>

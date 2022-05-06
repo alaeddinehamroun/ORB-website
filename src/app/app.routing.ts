@@ -47,10 +47,10 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'details/:username', component: DetailsComponent, canActivate: [AuthGuard], // here we tell Angular to check the access with our AuthGuard
+    path: 'details/:id', component: DetailsComponent, canActivate: [AuthGuard], // here we tell Angular to check the access with our AuthGuard
   },
   {
-    path: 'video-call/:username', component: VideoCallComponent, canActivate: [AuthGuard], // here we tell Angular to check the access with our AuthGuard
+    path: 'video-call/:id', component: VideoCallComponent, canActivate: [AuthGuard], // here we tell Angular to check the access with our AuthGuard
   },
   { path: '**', component: Error404Component },
 

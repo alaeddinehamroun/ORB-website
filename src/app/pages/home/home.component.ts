@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   constructor(private patientService: PatientService,
     private dialogService: NbDialogService) {
       this.patients = this.patientService.getPatients();
+      this.patientService.getPatients().subscribe(v => console.log(v))
   }
 
   ngOnInit(): void {

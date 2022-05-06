@@ -1,36 +1,45 @@
-<app-navbar>
+<app-navbar >
   <div class="container-fluid">
     <div class="row">
+
       <div class="col-12 col-md-4">
-        <app-card  [patient]="patient" size="giant"></app-card>
+        <div class="mb-4">
+          <hr data-content="Personal Infos" class="hr-text">
+        </div>
+        <app-card [patient]="patient" size="giant"></app-card>
       </div>
       <div class="col-12 col-md-3">
-        <app-status-card tool="Ligth"></app-status-card>
-        <app-status-card tool="TV"></app-status-card>
-        <app-status-card tool="Air conditioner"></app-status-card>
+        <div class="mb-4">
+          <hr data-content="Devices" class="hr-text">
+        </div>
+        <app-status-card  [toggleTool]="patient.devices!.lights!" (deviceStatusChanged)="onChange($event, 'lights')" tool="Lights"></app-status-card>
+        <app-status-card [toggleTool]="patient.devices!.tv!" (deviceStatusChanged)="onChange($event, 'tv')" tool="TV"></app-status-card>
+        <app-status-card [toggleTool]="patient.devices!.ac!" (deviceStatusChanged)="onChange($event, 'ac')" tool="Air conditioner"></app-status-card>
 
-        <nb-card>
-          <nb-card-header>
-            <h1 class="h5">Selected date: {{ date | date }}</h1>
-          </nb-card-header>
-          <nb-card-body>
-            <nb-calendar [(date)]="date">
-            </nb-calendar>
+        <div class="mb-4">
+          <hr data-content="Live" class="hr-text">
+        </div>
+        <nb-card accent="danger" size="tiny" style=" flex-direction: column;
+        align-items: center;" [style.background-image]="'url(https://cdna.artstation.com/p/assets/images/images/013/251/276/large/danil-prokoshev-.jpg)'">
+          <nb-card-body >
+            <button nbButton status="danger" (click)="openWindow()"><nb-icon icon="video-outline"></nb-icon>Open video monitor</button>
           </nb-card-body>
         </nb-card>
+
       </div>
       <div class="col-12 col-md-5">
-        <nb-card>
-          <nb-card-header>
-            Logs
-          </nb-card-header>
+        <div class="mb-4">
+          <hr data-content="Logs" class="hr-text">
+        </div>
+        <nb-card size="giant">
+
           <nb-card-body>
             <nb-tabset fullWidth>
-              <nb-tab tabTitle="All" badgeText="99+" badgeStatus="danger">
-                <p>List of <strong>users</strong>.</p>
+              <nb-tab tabTitle="All" badgeText="99+" badgeStatus="warning">
+                <!-- <p>List of <strong>users</strong>.</p> -->
               </nb-tab>
-              <nb-tab tabTitle="Urgent" badgeText="12" badgePosition="bottom right" badgeStatus="warning">
-                <p>List of <strong>orders</strong>.</p>
+              <nb-tab tabTitle="Urgent" badgeText="12" badgeStatus="danger">
+                <!-- <p>List of <strong>orders</strong>.</p> -->
               </nb-tab>
               <nb-tab tabTitle="Visitors" badgeText="new" badgePosition="top right" badgeStatus="success">
                 <nb-list>
@@ -43,9 +52,18 @@
             </nb-tabset>
           </nb-card-body>
         </nb-card>
+        <!-- <nb-card>
+          <nb-card-header>
+            <h1 class="h5">Selected date: {{ date | date }}</h1>
+          </nb-card-header>
+          <nb-card-body>
+            <nb-calendar [(date)]="date">
+            </nb-calendar>
+          </nb-card-body>
+        </nb-card> -->
       </div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-12 col-lg-8">
         <nb-card>
           <nb-card-header>Video monitor</nb-card-header>
@@ -54,11 +72,14 @@
           </nb-card-body>
         </nb-card>
       </div>
-      <!-- <div class="col-12 col-lg-4">
+      <div class="col-12 col-lg-4">
         <app-chat></app-chat>
-      </div> -->
-    </div>
-    <!-- <div class="row">
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="mb-4">
+        <hr data-content="Charts" class="hr-text">
+      </div>
       <div class="col-12 col-lg-6">
         <nb-card>
           <nb-card-header>Chart line</nb-card-header>
@@ -75,6 +96,9 @@
           </nb-card-body>
         </nb-card>
       </div>
-    </div> -->
+    </div>
   </div>
+
+
+
 </app-navbar>

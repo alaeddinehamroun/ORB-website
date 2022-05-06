@@ -16,9 +16,4 @@
 nb-layout-header nav {
   justify-content: flex-end !important;
 }
-nb-layout-header nav nb-icon:hover {
-  transform: rotate(360deg);
-}
-nb-layout-header nav nb-icon {
-  transition: all 1s;
-}
+

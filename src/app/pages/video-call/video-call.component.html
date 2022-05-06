@@ -29,7 +29,7 @@
       <nb-icon icon="video-off-outline" *ngIf="this.videoStatus"></nb-icon>
       <nb-icon icon="video-outline" *ngIf="!this.videoStatus"></nb-icon>
     </button>
-    <button outline class="video-action-button endcall" (click)="hangup()">
+    <button outline class="video-action-button endcall" [routerLink]="['/details', this.patientId]" routerLinkActive="active">
       <nb-icon icon="phone-missed-outline"></nb-icon> Leave
     </button>
     <button outline class="video-action-button">

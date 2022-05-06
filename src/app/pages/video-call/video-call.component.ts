@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NbAuthService } from '@nebular/auth';
 
 interface Data { sdp: string; type: string }
@@ -36,7 +36,9 @@ export class VideoCallComponent implements OnInit, OnDestroy {
   private remoteStream!: MediaStream;
   callId!: string;
   user: any
-  constructor(private firestore: AngularFirestore, private authService: NbAuthService, private router: Router) {
+  patientId!: string;
+  constructor(private firestore: AngularFirestore, private authService: NbAuthService, private router: Router,
+    private route: ActivatedRoute) {
     this.authService.onTokenChange()
       .subscribe((token: any) => {
 
@@ -49,7 +51,9 @@ export class VideoCallComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-
+    this.route.params.subscribe((v: any) => {
+      this.patientId = v.id;
+    });
     await this.openUserMedia();
     await this.answer();
   }
@@ -207,12 +211,10 @@ export class VideoCallComponent implements OnInit, OnDestroy {
     });
 
   }
-  public async hangup() {
+  // public async hangup() {
+  //   this.router.navigate(['/details',this.patientId]);
 
-
-    this.router.navigate(['/details/Mailchimp']);
-
-  }
+  // }
   public registerPeerConnectionListeners() {
     this.peerConnection.addEventListener('icegatheringstatechange', () => {
       console.log(

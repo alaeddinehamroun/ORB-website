@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { NbAuthService, NbAuthToken } from "@nebular/auth";
+import { Observable } from "rxjs";
 import { Notification } from "../models/notification.model";
 import { Patient } from "../models/patient.model";
 
@@ -35,7 +36,7 @@ export class PatientService {
     return patientRef.valueChanges({ idField: 'id' });
 
   }
-  getPatientById(id: string) {
+  getPatientById(id: string): Observable<any> {
     const patientRef = this.firestore.collection<Patient>('patients').doc(id);
     return patientRef.valueChanges({ idField: 'id' });
 

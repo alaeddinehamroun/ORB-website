@@ -12,11 +12,14 @@ import { PatientService } from 'src/app/services/patient.service';
 })
 export class HomeComponent implements OnInit {
   patients!: Observable<Patient[]>;
+  loading: boolean = true;
 
   constructor(private patientService: PatientService,
     private dialogService: NbDialogService) {
-      this.patients = this.patientService.getPatients();
-      this.patientService.getPatients().subscribe(v => console.log(v))
+    this.patients = this.patientService.getPatients();
+    this.patientService.getPatients().subscribe(v => {
+      this.loading = false;
+    });
   }
 
   ngOnInit(): void {

@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { NbAuthService, NbAuthToken } from "@nebular/auth";
+import { Notification } from "../models/notification.model";
 import { Patient } from "../models/patient.model";
 
 @Injectable({
@@ -34,7 +35,7 @@ export class PatientService {
     return patientRef.valueChanges({ idField: 'id' });
 
   }
-  getPatientById(id: string){
+  getPatientById(id: string) {
     const patientRef = this.firestore.collection<Patient>('patients').doc(id);
     return patientRef.valueChanges({ idField: 'id' });
 
@@ -52,11 +53,29 @@ export class PatientService {
         'devices.ac': deviceStatus
 
       })
-      if (device == "tv")
+    if (device == "tv")
       patientRef.update({
         'devices.tv': deviceStatus
 
       })
 
+  }
+  openVideoMonitor() {
+
+  }
+  sendNotification(patientId: string, type: string, notificationText: string) {
+    console.log(new Date().getTime())
+    const patientRef = this.firestore.collection('patients').doc(patientId).collection('notifications');
+    patientRef.doc().set({
+      type: type,
+      text: notificationText,
+      date: new Date().getTime(),
+      from: "nurse"
+    });
+  }
+
+  getNotifications(patientId: string) {
+    const patientRef = this.firestore.collection('patients').doc(patientId).collection<Notification>('notifications',  ref => ref.orderBy('date'));
+    return patientRef.valueChanges({ idField: 'id' });
   }
 }

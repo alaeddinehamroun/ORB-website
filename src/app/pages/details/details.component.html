@@ -1,4 +1,4 @@
-<app-navbar >
+<app-navbar [nbSpinner]="loading" nbSpinnerSize="giant">
   <div class="container-fluid">
     <div class="row">
 
@@ -6,23 +6,29 @@
         <div class="mb-4">
           <hr data-content="Personal Infos" class="hr-text">
         </div>
-        <app-card [patient]="patient" size="giant"></app-card>
+        <app-personal-info-card [patient]="patient" size="giant"></app-personal-info-card>
       </div>
       <div class="col-12 col-md-3">
         <div class="mb-4">
           <hr data-content="Devices" class="hr-text">
         </div>
-        <app-status-card  [toggleTool]="patient.devices!.lights!" (deviceStatusChanged)="onChange($event, 'lights')" tool="Lights"></app-status-card>
-        <app-status-card [toggleTool]="patient.devices!.tv!" (deviceStatusChanged)="onChange($event, 'tv')" tool="TV"></app-status-card>
-        <app-status-card [toggleTool]="patient.devices!.ac!" (deviceStatusChanged)="onChange($event, 'ac')" tool="Air conditioner"></app-status-card>
-
+        <app-status-card [toggleTool]="patient.devices!.lights!" (deviceStatusChanged)="onChange($event, 'lights')"
+          tool="Lights"></app-status-card>
+        <app-status-card [toggleTool]="patient.devices!.tv!" (deviceStatusChanged)="onChange($event, 'tv')" tool="TV">
+        </app-status-card>
+        <app-status-card [toggleTool]="patient.devices!.ac!" (deviceStatusChanged)="onChange($event, 'ac')"
+          tool="Air conditioner">
+        </app-status-card>
         <div class="mb-4">
           <hr data-content="Live" class="hr-text">
         </div>
         <nb-card accent="danger" size="tiny" style=" flex-direction: column;
-        align-items: center;" [style.background-image]="'url(https://cdna.artstation.com/p/assets/images/images/013/251/276/large/danil-prokoshev-.jpg)'">
-          <nb-card-body >
-            <button nbButton status="danger" (click)="openWindow()"><nb-icon icon="video-outline"></nb-icon>Open video monitor</button>
+          align-items: center;"
+          [style.background-image]="'url(https://cdna.artstation.com/p/assets/images/images/013/251/276/large/danil-prokoshev-.jpg)'">
+          <nb-card-body>
+            <button nbButton status="danger" (click)="openWindow()">
+              <nb-icon icon="video-outline"></nb-icon>Open video monitor
+            </button>
           </nb-card-body>
         </nb-card>
 
@@ -31,27 +37,10 @@
         <div class="mb-4">
           <hr data-content="Logs" class="hr-text">
         </div>
-        <nb-card size="giant">
+        <app-notifications></app-notifications>
+        
 
-          <nb-card-body>
-            <nb-tabset fullWidth>
-              <nb-tab tabTitle="All" badgeText="99+" badgeStatus="warning">
-                <!-- <p>List of <strong>users</strong>.</p> -->
-              </nb-tab>
-              <nb-tab tabTitle="Urgent" badgeText="12" badgeStatus="danger">
-                <!-- <p>List of <strong>orders</strong>.</p> -->
-              </nb-tab>
-              <nb-tab tabTitle="Visitors" badgeText="new" badgePosition="top right" badgeStatus="success">
-                <nb-list>
-                  <nb-list-item *ngFor="let user of users">
-                    <nb-user [name]="user.name" [title]="user.title">
-                    </nb-user>
-                  </nb-list-item>
-                </nb-list>
-              </nb-tab>
-            </nb-tabset>
-          </nb-card-body>
-        </nb-card>
+
         <!-- <nb-card>
           <nb-card-header>
             <h1 class="h5">Selected date: {{ date | date }}</h1>

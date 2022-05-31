@@ -1,0 +1,14 @@
+<nb-card>
+  <nb-card-header>Enter Type</nb-card-header>
+  <nb-card-body>
+    <input #type nbInput placeholder="Type">
+  </nb-card-body>
+  <nb-card-header>Enter Notification</nb-card-header>
+  <nb-card-body>
+    <input #notificationText nbInput placeholder="Notification text">
+  </nb-card-body>
+  <nb-card-footer>
+    <button class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
+    <button nbButton status="success" (click)="submit(type.value, notificationText.value)">Submit</button>
+  </nb-card-footer>
+</nb-card>

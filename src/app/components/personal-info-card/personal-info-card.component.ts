@@ -3,11 +3,11 @@ import { NbComponentSize } from '@nebular/theme';
 import { Patient } from 'src/app/models/patient.model';
 
 @Component({
-  selector: 'app-card',
-  templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  selector: 'app-personal-info-card',
+  templateUrl: './personal-info-card.component.html',
+  styleUrls: ['./personal-info-card.component.scss']
 })
-export class CardComponent implements OnInit {
+export class PersonalInfoCardComponent implements OnInit {
   @Input() patient! : Patient;
   @Input() size! : NbComponentSize;
 

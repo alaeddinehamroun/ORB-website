@@ -1,7 +1,7 @@
 <nb-card [size]="size" [status]="patient.isOnline ? 'success' : 'danger'">
   <nb-card-header>
     <div class="d-flex flex-row align-items-center">
-      <div class="icon"> <img src="{{patient.photoURL}}" alt="photo"> </div>
+      <div class="icon"> <img src="{{patient.photoURL}}" alt=""> </div>
       <div class="ms-2 c-details">
         <h6 class="mb-0">{{patient.displayName}}</h6>
         <div class="badge" [ngStyle]="{'color': patient.isOnline ? '#24dc9c' : 'red'}">

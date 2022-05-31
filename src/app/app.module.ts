@@ -13,7 +13,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NbThemeModule, NbButtonModule, NbCardModule, NbLayoutModule, NbIconModule, NbActionsModule, NbListModule, NbUserModule, NbAccordionModule, NbTableModule, NbTabsetModule, NbCalendarModule, NbChatModule, NbToggleModule, NbDialogModule, NbInputModule, NbWindowModule, NbStepperModule, NbSpinnerModule } from '@nebular/theme';
+import { NbThemeModule, NbButtonModule, NbCardModule, NbLayoutModule, NbIconModule, NbActionsModule, NbListModule, NbUserModule, NbAccordionModule, NbTableModule, NbTabsetModule, NbCalendarModule, NbChatModule, NbToggleModule, NbDialogModule, NbInputModule, NbWindowModule, NbStepperModule, NbSpinnerModule, NbBadgeModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { SharedModule } from './shared/shared.module';
@@ -22,7 +22,6 @@ import { DetailsComponent } from './pages/details/details.component';
 import { Error404Component } from './pages/error404/error404.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FormsModule } from '@angular/forms';
-import { CardComponent } from './components/card/card.component';
 import { VideoCallComponent } from './pages/video-call/video-call.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { ChatShowcaseService } from './services/chat-showcase/chat-showcase.service';
@@ -32,15 +31,17 @@ import { ChartModule } from 'angular2-chartjs';
 import { ChartjsPieComponent } from './components/chartjs-pie/chartjs-pie.component';
 import { VideoMonitorComponent } from './components/video-monitor/video-monitor.component';
 import { CallingDialogComponent } from './components/calling-dialog/calling-dialog.component';
-import { NbAuthModule, NbPasswordAuthStrategy } from '@nebular/auth';
+import { NbAuthModule } from '@nebular/auth';
 import { NbFirebaseAuthModule, NbFirebasePasswordStrategy } from '@nebular/firebase-auth';
 import { AuthGuard } from './guards/auth-guard.service';
 import { AddPatientDialogComponent } from './components/add-patient-dialog/add-patient-dialog.component';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import { AddNotificationDialogComponent } from './components/add-notification-dialog/add-notification-dialog.component';
+import { PersonalInfoCardComponent } from './components/personal-info-card/personal-info-card.component';
+import { NotificationsComponent } from './components/notifications/notifications.component';
 
 @NgModule({
   declarations: [
-    CardComponent,
+    PersonalInfoCardComponent,
     AppComponent,
     DetailsComponent,
     Error404Component,
@@ -53,6 +54,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     VideoMonitorComponent,
     CallingDialogComponent,
     AddPatientDialogComponent,
+    AddNotificationDialogComponent,
+    NotificationsComponent,
   ],
   imports: [
     HttpClientModule,
@@ -67,6 +70,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     BrowserAnimationsModule,
     NbThemeModule.forRoot({ name: 'dark' }),
     NbEvaIconsModule,
+    NbBadgeModule,
     NbButtonModule,
     NbCardModule,
     NbLayoutModule,

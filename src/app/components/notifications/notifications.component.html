@@ -1,0 +1,16 @@
+<nb-accordion fullWidth>
+  <nb-accordion-item *ngFor="let notif of notifications | async">
+
+    <nb-accordion-item-header>
+      <nb-badge [text]="notif.from === 'orb' ? 'recieved' : 'sent'" [status]="notif.from === 'orb' ? 'danger' : 'info'"
+        position="top right"></nb-badge>
+      {{notif.date | date : 'short' }}
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      {{notif.text}}
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>
+<button nbButton fullWidth status="primary" (click)="open()">
+  <nb-icon icon="plus"></nb-icon>Add Notification
+</button>

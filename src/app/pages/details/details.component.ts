@@ -1,7 +1,8 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbWindowService } from '@nebular/theme';
+import { NbDialogService, NbWindowService } from '@nebular/theme';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { AddNotificationDialogComponent } from 'src/app/components/add-notification-dialog/add-notification-dialog.component';
 import { VideoMonitorComponent } from 'src/app/components/video-monitor/video-monitor.component';
 import { Patient } from 'src/app/models/patient.model';
 import { PatientService } from 'src/app/services/patient.service';
@@ -26,7 +27,6 @@ export class DetailsComponent implements OnInit {
   messages!: any[];
   patient!: Patient;
   loading: boolean = true;
-
   constructor(private route: ActivatedRoute,
     private patientService: PatientService,
     private windowService: NbWindowService) {
@@ -35,16 +35,11 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe((v) => {
       this.patientService.getPatientById(v['id']).subscribe((p: any) => {
-        if (p !=undefined) {
-          console.log(v)
+        if (p != undefined) {
           this.patient = p;
-          console.log(this.patient)
           this.loading = false;
         }
-
-
-      }
-      );
+      });
     });
 
   }
@@ -55,7 +50,9 @@ export class DetailsComponent implements OnInit {
   }
   openWindow() {
     this.windowService.open(
-      VideoMonitorComponent, {title: "Video monitor"}
+      VideoMonitorComponent, { title: "Video monitor" }
     );
   }
+
+
 }

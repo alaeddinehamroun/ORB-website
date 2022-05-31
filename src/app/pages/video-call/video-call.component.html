@@ -3,15 +3,15 @@
     <div class="video-participant">
       <div class="participant-actions">
         <button class="btn-mute">
-          <nb-icon icon="volume-off-outline" *ngIf="this.remoteAudioStatus" status="basic"></nb-icon>
-          <nb-icon icon="volume-up-outline" *ngIf="!this.remoteAudioStatus" status="basic"></nb-icon>
+          <nb-icon icon="volume-off-outline" *ngIf="!this.remoteAudioStatus" status="basic"></nb-icon>
+          <nb-icon icon="volume-up-outline" *ngIf="this.remoteAudioStatus" status="basic"></nb-icon>
         </button>
         <button class="btn-camera">
-          <nb-icon icon="video-off-outline" *ngIf="this.remoteVideoStatus" status="basic"></nb-icon>
-          <nb-icon icon="video-outline" *ngIf="!this.remoteVideoStatus" status="basic"></nb-icon>
+          <nb-icon icon="video-off-outline" *ngIf="!this.remoteVideoStatus" status="basic"></nb-icon>
+          <nb-icon icon="video-outline" *ngIf="this.remoteVideoStatus" status="basic"></nb-icon>
         </button>
       </div>
-      <a href="#" class="name-tag">Emmy Lou</a>
+      <a href="#" class="name-tag">Orb</a>
       <video #remoteVideo id="remoteVideo" autoplay playsinline></video>
     </div>
     <div class="local-stream">
@@ -22,12 +22,12 @@
 
   <div class="video-call-actions">
     <button class="video-action-button" (click)="toggleAudio()">
-      <nb-icon icon="volume-off-outline" *ngIf="this.audioStatus"></nb-icon>
-      <nb-icon icon="volume-up-outline" *ngIf="!this.audioStatus"></nb-icon>
+      <nb-icon icon="volume-off-outline" *ngIf="!this.audioStatus"></nb-icon>
+      <nb-icon icon="volume-up-outline" *ngIf="this.audioStatus"></nb-icon>
     </button>
     <button class="video-action-button" (click)="toggleVideo()">
-      <nb-icon icon="video-off-outline" *ngIf="this.videoStatus"></nb-icon>
-      <nb-icon icon="video-outline" *ngIf="!this.videoStatus"></nb-icon>
+      <nb-icon icon="video-off-outline" *ngIf="!this.videoStatus"></nb-icon>
+      <nb-icon icon="video-outline" *ngIf="this.videoStatus"></nb-icon>
     </button>
     <button outline class="video-action-button endcall" [routerLink]="['/details', this.patientId]" routerLinkActive="active">
       <nb-icon icon="phone-missed-outline"></nb-icon> Leave

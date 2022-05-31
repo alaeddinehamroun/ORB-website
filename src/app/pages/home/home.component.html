@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-4" *ngFor="let patient of patients | async">
-        <app-card [patient]="patient" size="medium"></app-card>
+        <app-personal-info-card [patient]="patient" size="medium"></app-personal-info-card>
       </div>
 
       <div class="col-md-4">

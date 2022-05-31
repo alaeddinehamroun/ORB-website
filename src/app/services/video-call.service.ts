@@ -1,25 +1,13 @@
-import { Component, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NbAuthService } from '@nebular/auth';
 
-interface Data { sdp: string; type: string }
-
-@Component({
-  selector: 'app-video-call',
-  templateUrl: './video-call.component.html',
-  styleUrls: ['./video-call.component.scss']
+@Injectable({
+  providedIn: 'root'
 })
+export class VideoCallService {
 
-export class VideoCallComponent implements OnInit, OnDestroy {
-
-  @ViewChild('localVideo') localVideo!: ElementRef<HTMLVideoElement>;
-  @ViewChild('remoteVideo') remoteVideo!: ElementRef<HTMLVideoElement>;
-  @ViewChild('dialog') dialog: any;
-  audioStatus: boolean = true;
-  videoStatus: boolean = true;
-  remoteAudioStatus: boolean = false;
-  remoteVideoStatus: boolean = false;
   servers = {
     iceServers: [
       {
@@ -34,51 +22,11 @@ export class VideoCallComponent implements OnInit, OnDestroy {
   peerConnection!: RTCPeerConnection;
   private localStream!: MediaStream;
   private remoteStream!: MediaStream;
-  callId!: string;
-  user: any
-  patientId!: string;
-  constructor(private firestore: AngularFirestore, private authService: NbAuthService, private router: Router,
-    private route: ActivatedRoute) {
-    this.authService.onTokenChange()
-      .subscribe((token: any) => {
+  constructor(private firestore: AngularFirestore) { }
 
-        if (token.isValid()) {
-          this.user = token.getPayload(); // here we receive a payload from the token and assigns it to our `user` variable
-          this.callId = this.user.user_id;
-        }
+  public async call(callId: string) {
 
-      });
-  }
-
-  async ngOnInit(): Promise<void> {
-    this.route.params.subscribe((v: any) => {
-      this.patientId = v.id;
-    });
-    await this.openUserMedia();
-    await this.answer();
-  }
-
-  public toggleAudio() {
-    this.localStream.getTracks()[0].enabled = !this.localStream.getTracks()[0].enabled;
-    this.audioStatus = this.localStream.getTracks()[0].enabled;
-  }
-  public toggleVideo() {
-    this.localStream.getTracks()[1].enabled = !this.localStream.getTracks()[1].enabled;
-    this.videoStatus = this.localStream.getTracks()[1].enabled;
-  }
-  public async openUserMedia() {
-    const stream = await navigator.mediaDevices.getUserMedia(
-      { video: true, audio: true });
-    this.localStream = stream;
-    this.localVideo.nativeElement.srcObject = this.localStream;
-
-    this.remoteStream = new MediaStream();
-
-    this.remoteVideo.nativeElement.srcObject = this.remoteStream;
-  }
-  public async call() {
-
-    const roomRef = this.firestore.collection('rooms').doc(this.callId);
+    const roomRef = this.firestore.collection('rooms').doc(callId);
 
     console.log('Create PeerConnection with configuration: ', this.servers);
     this.peerConnection = new RTCPeerConnection(this.servers);
@@ -147,9 +95,29 @@ export class VideoCallComponent implements OnInit, OnDestroy {
 
   }
 
-  public async answer() {
+  public registerPeerConnectionListeners() {
+    this.peerConnection.addEventListener('icegatheringstatechange', () => {
+      console.log(
+        `ICE gathering state changed: ${this.peerConnection.iceGatheringState}`);
+    });
 
-    const roomRef = this.firestore.collection('rooms').doc("dLKr1teQlsmBOMwQB5tD");
+    this.peerConnection.addEventListener('connectionstatechange', () => {
+      console.log(`Connection state change: ${this.peerConnection.connectionState}`);
+    });
+
+    this.peerConnection.addEventListener('signalingstatechange', () => {
+      console.log(`Signaling state change: ${this.peerConnection.signalingState}`);
+    });
+
+    this.peerConnection.addEventListener('iceconnectionstatechange ', () => {
+      console.log(
+        `ICE connection state change: ${this.peerConnection.iceConnectionState}`);
+    });
+  }
+
+  public async answer(remoteAudioStatus: boolean, remoteVideoStatus: boolean) {
+
+    const roomRef = this.firestore.collection('rooms').doc("bRfTIinFWbPsnQ54pQon");
 
     roomRef.get().subscribe(async (roomSnapshot: any) => {
       console.log(roomSnapshot.exists);
@@ -174,8 +142,8 @@ export class VideoCallComponent implements OnInit, OnDestroy {
             this.remoteStream.addTrack(track);
             console.log('remote stream' + this.remoteStream)
           });
-          this.remoteAudioStatus = this.remoteStream.getTracks()[0].enabled;
-          this.remoteVideoStatus = this.remoteStream.getTracks()[1].enabled;
+          remoteAudioStatus = this.remoteStream.getTracks()[0].enabled;
+          remoteVideoStatus = this.remoteStream.getTracks()[1].enabled;
 
         }
         // Code for creating SDP answer below
@@ -211,31 +179,15 @@ export class VideoCallComponent implements OnInit, OnDestroy {
     });
 
   }
-  // public async hangup() {
-  //   this.router.navigate(['/details',this.patientId]);
-
-  // }
-  public registerPeerConnectionListeners() {
-    this.peerConnection.addEventListener('icegatheringstatechange', () => {
-      console.log(
-        `ICE gathering state changed: ${this.peerConnection.iceGatheringState}`);
-    });
-
-    this.peerConnection.addEventListener('connectionstatechange', () => {
-      console.log(`Connection state change: ${this.peerConnection.connectionState}`);
-    });
-
-    this.peerConnection.addEventListener('signalingstatechange', () => {
-      console.log(`Signaling state change: ${this.peerConnection.signalingState}`);
-    });
-
-    this.peerConnection.addEventListener('iceconnectionstatechange ', () => {
-      console.log(
-        `ICE connection state change: ${this.peerConnection.iceConnectionState}`);
-    });
+  public async toggleAudio(audioStatus: boolean) {
+    this.localStream.getTracks()[0].enabled = !this.localStream.getTracks()[0].enabled;
+    audioStatus = this.localStream.getTracks()[0].enabled;
   }
-  ngOnDestroy(): void {
-    const roomRef = this.firestore.collection('rooms').doc(this.callId);
+  toggleVideo(videoStatus: boolean) {
+    this.localStream.getTracks()[1].enabled = !this.localStream.getTracks()[1].enabled;
+    videoStatus = this.localStream.getTracks()[1].enabled;
+  }
+  public end() {
     this.localStream.getTracks().forEach(track => {
       track.stop();
     });
@@ -247,9 +199,6 @@ export class VideoCallComponent implements OnInit, OnDestroy {
       this.peerConnection.close();
     }
 
-    // Delete room on hangup
-    roomRef.delete();
-
   }
-
 }
+

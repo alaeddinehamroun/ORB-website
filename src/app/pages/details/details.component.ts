@@ -1,9 +1,7 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { NbDialogService, NbWindowService } from '@nebular/theme';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { NbToastrService, NbWindowService } from '@nebular/theme';
 import { map } from 'rxjs';
-import { AddNotificationDialogComponent } from 'src/app/components/add-notification-dialog/add-notification-dialog.component';
 import { VideoMonitorComponent } from 'src/app/components/video-monitor/video-monitor.component';
 import { Patient } from 'src/app/models/patient.model';
 import { PatientService } from 'src/app/services/patient.service';
@@ -19,9 +17,11 @@ export class DetailsComponent implements OnInit {
   date = new Date();
   patient!: Patient;
   loading: boolean = true;
+  incomingCall: boolean = false
   constructor(private route: ActivatedRoute,
     private patientService: PatientService,
-    private windowService: NbWindowService) {
+    private windowService: NbWindowService,
+    private toastrService: NbToastrService) {
 
   }
   ngOnInit(): void {
@@ -35,6 +35,8 @@ export class DetailsComponent implements OnInit {
         this.loading = false;
       });
     })
+
+
   }
 
   onChange($event: boolean, device: string) {

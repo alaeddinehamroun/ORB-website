@@ -13,7 +13,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { NbThemeModule, NbButtonModule, NbCardModule, NbLayoutModule, NbIconModule, NbActionsModule, NbListModule, NbUserModule, NbAccordionModule, NbTableModule, NbTabsetModule, NbCalendarModule, NbChatModule, NbToggleModule, NbDialogModule, NbInputModule, NbWindowModule, NbStepperModule, NbSpinnerModule, NbBadgeModule } from '@nebular/theme';
+import { NbThemeModule, NbButtonModule, NbCardModule, NbLayoutModule, NbIconModule, NbActionsModule, NbListModule, NbUserModule, NbAccordionModule, NbTableModule, NbTabsetModule, NbCalendarModule, NbChatModule, NbToggleModule, NbDialogModule, NbInputModule, NbWindowModule, NbStepperModule, NbSpinnerModule, NbBadgeModule, NbToastrModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 
 import { SharedModule } from './shared/shared.module';
@@ -87,6 +87,8 @@ import { NotificationsComponent } from './components/notifications/notifications
     NbWindowModule.forRoot(),
     NbStepperModule,
     NbSpinnerModule,
+    NbToastrModule.forRoot(),
+
 
     NbAuthModule.forRoot({
       strategies: [

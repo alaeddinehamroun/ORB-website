@@ -76,7 +76,7 @@ export class PatientService {
   }
 
   getNotifications(patientId: string) {
-    const patientRef = this.firestore.collection('patients').doc(patientId).collection<Notification>('notifications',  ref => ref.orderBy('date'));
+    const patientRef = this.firestore.collection('patients').doc(patientId).collection<Notification>('notifications', ref => ref.orderBy('date'));
     return patientRef.valueChanges({ idField: 'id' });
   }
 }

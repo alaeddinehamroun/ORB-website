@@ -16,10 +16,12 @@ export class VideoCallComponent implements OnInit, OnDestroy {
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('remoteVideo') remoteVideo!: ElementRef<HTMLVideoElement>;
   @ViewChild('dialog') dialog: any;
+  loading: boolean = true;
   audioStatus: boolean = true;
   videoStatus: boolean = true;
   remoteAudioStatus: boolean = false;
   remoteVideoStatus: boolean = false;
+
   servers = {
     iceServers: [
       {
@@ -34,7 +36,8 @@ export class VideoCallComponent implements OnInit, OnDestroy {
   peerConnection!: RTCPeerConnection;
   private localStream!: MediaStream;
   private remoteStream!: MediaStream;
-  callId!: string;
+  callId
+  : string = "dLKr1teQlsmBOMwQB5tD";
   user: any
   patientId!: string;
   constructor(private firestore: AngularFirestore, private authService: NbAuthService, private router: Router,
@@ -44,7 +47,6 @@ export class VideoCallComponent implements OnInit, OnDestroy {
 
         if (token.isValid()) {
           this.user = token.getPayload(); // here we receive a payload from the token and assigns it to our `user` variable
-          this.callId = this.user.user_id;
         }
 
       });
@@ -68,7 +70,7 @@ export class VideoCallComponent implements OnInit, OnDestroy {
   }
   public async openUserMedia() {
     const stream = await navigator.mediaDevices.getUserMedia(
-      { video: true, audio: true });
+      { video: true, audio: false });
     this.localStream = stream;
     this.localVideo.nativeElement.srcObject = this.localStream;
 
@@ -76,6 +78,8 @@ export class VideoCallComponent implements OnInit, OnDestroy {
 
     this.remoteVideo.nativeElement.srcObject = this.remoteStream;
   }
+
+
   public async call() {
 
     const roomRef = this.firestore.collection('rooms').doc(this.callId);
@@ -149,8 +153,8 @@ export class VideoCallComponent implements OnInit, OnDestroy {
 
   public async answer() {
 
-    const roomRef = this.firestore.collection('rooms').doc("dLKr1teQlsmBOMwQB5tD");
-
+    const roomRef = this.firestore.collection('rooms').doc(this.callId);
+    console.log(this.callId);
     roomRef.get().subscribe(async (roomSnapshot: any) => {
       console.log(roomSnapshot.exists);
       if (roomSnapshot.exists) {
@@ -163,6 +167,7 @@ export class VideoCallComponent implements OnInit, OnDestroy {
         // Code for collecting ICE candidates below
         const calleeCandidatesCollection = roomRef.collection('calleeCandidates');
         this.peerConnection.onicecandidate = event => {
+          this.loading = false;
           event.candidate && calleeCandidatesCollection.add(event.candidate.toJSON());
         };
         // Code for collecting ICE candidates above

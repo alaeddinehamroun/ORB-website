@@ -5,14 +5,20 @@
         <button class="btn-mute">
           <nb-icon icon="volume-off-outline" *ngIf="!this.remoteAudioStatus" status="basic"></nb-icon>
           <nb-icon icon="volume-up-outline" *ngIf="this.remoteAudioStatus" status="basic"></nb-icon>
+
         </button>
         <button class="btn-camera">
           <nb-icon icon="video-off-outline" *ngIf="!this.remoteVideoStatus" status="basic"></nb-icon>
           <nb-icon icon="video-outline" *ngIf="this.remoteVideoStatus" status="basic"></nb-icon>
         </button>
+        <button class="btn-mute" [nbSpinner]="loading" nbSpinnerSize="giant">
+
+        </button>
       </div>
       <a href="#" class="name-tag">Orb</a>
       <video #remoteVideo id="remoteVideo" autoplay playsinline></video>
+
+
     </div>
     <div class="local-stream">
       <a href="#" class="name-tag">You</a>
@@ -29,7 +35,8 @@
       <nb-icon icon="video-off-outline" *ngIf="!this.videoStatus"></nb-icon>
       <nb-icon icon="video-outline" *ngIf="this.videoStatus"></nb-icon>
     </button>
-    <button outline class="video-action-button endcall" [routerLink]="['/details', this.patientId]" routerLinkActive="active">
+    <button outline class="video-action-button endcall" [routerLink]="['/details', this.patientId]"
+      routerLinkActive="active">
       <nb-icon icon="phone-missed-outline"></nb-icon> Leave
     </button>
     <button outline class="video-action-button">

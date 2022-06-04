@@ -115,9 +115,10 @@ export class VideoCallService {
     });
   }
 
-  public async answer(remoteAudioStatus: boolean, remoteVideoStatus: boolean) {
+  public async answer(remoteAudioStatus: boolean, remoteVideoStatus: boolean, callId: string) {
 
-    const roomRef = this.firestore.collection('rooms').doc("bRfTIinFWbPsnQ54pQon");
+
+    const roomRef = this.firestore.collection('rooms').doc(callId);
 
     roomRef.get().subscribe(async (roomSnapshot: any) => {
       console.log(roomSnapshot.exists);
@@ -142,8 +143,8 @@ export class VideoCallService {
             this.remoteStream.addTrack(track);
             console.log('remote stream' + this.remoteStream)
           });
-          remoteAudioStatus = this.remoteStream.getTracks()[0].enabled;
-          remoteVideoStatus = this.remoteStream.getTracks()[1].enabled;
+          // this.remoteAudioStatus = this.remoteStream.getTracks()[0].enabled;
+          // this.remoteVideoStatus = this.remoteStream.getTracks()[1].enabled;
 
         }
         // Code for creating SDP answer below
@@ -177,7 +178,6 @@ export class VideoCallService {
       }
 
     });
-
   }
   public async toggleAudio(audioStatus: boolean) {
     this.localStream.getTracks()[0].enabled = !this.localStream.getTracks()[0].enabled;
